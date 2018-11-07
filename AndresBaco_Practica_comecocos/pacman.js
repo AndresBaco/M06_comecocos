@@ -34,8 +34,10 @@ var tauler = [ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 var Fantasma1= "X";
 var Fantasma2= "X";
 var Fantasma3= "X";
-var Jugador= "Q";
-var  posicions= [[0, 0],[0, 0],[0, 0]] //array on aniran les posicions dels 3 fantasmes
+var jugador= "Q";
+var posicioJugador= [0, 0]
+var  posicionsFantasmes= [[0, 0],[0, 0],[0, 0]] //array on aniran les posicions dels 3 fantasmes
+
 function posicioInicialFantasmes(f1, f2, f3){ //funció on es declara la posició inicial dels fantasmes
 	var fantasma=f1
 	for (i=0; i<3; i++) //aquest bucle s'executa 3 vegades, de 3 fantasmes que hi ha
@@ -55,8 +57,8 @@ function posicioInicialFantasmes(f1, f2, f3){ //funció on es declara la posici�
 			//si la posició és vàlida, col·loca el fantasma al tauler
 			{
 				tauler[fila][columna]=fantasma
-				posicions[i][0]= fila //Y
-				posicions[i][1]= columna //X
+				posicionsFantasmes[i][0]= fila //Y
+				posicionsFantasmes[i][1]= columna //X
 				break
 			}
 		}
@@ -70,7 +72,6 @@ function posicioInicialFantasmes(f1, f2, f3){ //funció on es declara la posici�
 		}
 		
 	}
-	return posicions
 	
 }
 
@@ -90,8 +91,9 @@ function posicioInicialJugador(j){ //Funció on calculem on sortirà el jugador
 			//si la posició és vàlida, col·loca el jugador al tauler
 			{
 				tauler[fila][columna]=j
-				pos = [fila, columna]
-				return pos
+				posicioJugador[0]=fila
+				posicioJugador[1]=columna
+				break
 			}
 		}
 }
@@ -126,49 +128,49 @@ function moureFantasma(){ //funcio per moure els fantasmes
 		while (true){
 			var moviment = Math.floor(Math.random() * 4); //calculem un numero entre 0 i 3, cada numero representa una direcció
 			if (moviment == 0){ //dreta
-				if (tauler[ posicions[i][0]][ posicions[i][1] + 1] == 0){ 
+				if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] + 1] == 0){ 
 				//Si es vol moure cap a la dreta, pero hi ha una paret, buscarà una altra direcció
 					continue
 				}
 				else{
 				//si es vol moure cap a la dreta, i hi ha camí lliure, reemplaza la posició del fantasma per un 1 y posa una X a la dreta de la posició inicial
-					tauler[ posicions[i][0]][ posicions[i][1]] = 1
-					posicions[i][1] += 1
-					tauler[ posicions[i][0]][ posicions[i][1]] = "X"
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = 1
+					posicionsFantasmes[i][1] += 1
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = "X"
 					break
 				}
 			}
 		
 			else if (moviment == 1){ //esquerra
-				if (tauler[ posicions[i][0]][ posicions[i][1] - 1] == 0){
+				if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] - 1] == 0){
 					continue
 				}
 				else {
-					tauler[ posicions[i][0]][ posicions[i][1]] = 1
-					 posicions[i][1] -= 1
-					tauler[ posicions[i][0]][ posicions[i][1]] = "X"
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = 1
+					 posicionsFantasmes[i][1] -= 1
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = "X"
 					break
 				}
 			}
 			else if (moviment == 2){ //amunt
-				if (tauler[ posicions[i][0] - 1][( posicions[i][1])] == 0){
+				if (tauler[ posicionsFantasmes[i][0] - 1][( posicionsFantasmes[i][1])] == 0){
 							continue
 					}
 				else {
-					tauler[ posicions[i][0]][ posicions[i][1]] = 1
-					 posicions[i][0] -= 1
-					tauler[ posicions[i][0]][ posicions[i][1]] = "X"
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = 1
+					 posicionsFantasmes[i][0] -= 1
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = "X"
 					break
 				}
 			}
 			else{ //abaix
-				if (tauler[ posicions[i][0] + 1][( posicions[i][1])] == 0){
+				if (tauler[ posicionsFantasmes[i][0] + 1][( posicionsFantasmes[i][1])] == 0){
 						continue
 					}
 				else {
-					tauler[ posicions[i][0]][ posicions[i][1]] = 1
-					 posicions[i][0] += 1
-					tauler[ posicions[i][0]][ posicions[i][1]] = "X"
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = 1
+					 posicionsFantasmes[i][0] += 1
+					tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1]] = "X"
 					break
 				}
 			}
@@ -178,17 +180,137 @@ function moureFantasma(){ //funcio per moure els fantasmes
 	
 }
 
-function moureFantasmes(){ //funcio que anira dins de l'interval
-	moureFantasma()
-	document.body.innerHTML = "" 
-	mostrarTaulell()
+function movimentInicial(){ 
+	var primerMoviment = Math.floor(Math.random() * 4) 
+	while (inici==true){ 
+		if (primerMoviment == 0){ //dreta
+			if (tauler[posicioJugador[0]][ posicioJugador[1] + 1] == 0){ 
+				//Si es vol moure cap a la dreta, pero hi ha una paret, buscarà una altra direcció
+				var primerMoviment = Math.floor(Math.random() * 4) 
+				continue
+			}
+			else{
+				tauler[posicioJugador[0]][posicioJugador[1]] = 1
+				posicioJugador[1] +=1
+				tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+				movimentFixe = 0
+				inici=false
+			}
+		}
+		else if (primerMoviment == 1){ //esquerra
+			if (tauler[posicioJugador[0]][ posicioJugador[1] - 1] == 0){ 
+				var primerMoviment = Math.floor(Math.random() * 4) 
+				continue
+			}
+			else{
+				tauler[posicioJugador[0]][posicioJugador[1]] = 1
+				posicioJugador[1] -=1
+				tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+				movimentFixe = 1
+				inici=false
+			}
+		}
+		else if (primerMoviment == 2){ //amunt
+			if (tauler[ posicioJugador[0] - 1][ posicioJugador[1]] == 0){ 
+				var primerMoviment = Math.floor(Math.random() * 4) 
+				continue
+			}
+			else{
+				tauler[posicioJugador[0]][posicioJugador[1]] = 1
+				posicioJugador[0] -=1
+				tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+				movimentFixe = 2
+				inici=false
+			}
+		}
+		else{ //abaix
+			if (tauler[posicioJugador[0] + 1][ posicioJugador[1]] == 0){ 
+				var primerMoviment = Math.floor(Math.random() * 4) 
+				continue
+			}
+			else{
+				tauler[posicioJugador[0]][posicioJugador[1]] = 1
+				posicioJugador[0] +=1
+				tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+				movimentFixe = 3
+				inici=false
+			}
+		}
+	}
 }
 
+function movimentJugador(event){ //Funció per a la següent entrega
+		if (movimentFixe == 0){ //dreta
+			if (tauler[posicioJugador[0]][ posicioJugador[1] + 1] == 0){ 
+			}
+			else{
+			tauler[posicioJugador[0]][posicioJugador[1]] = 1
+			posicioJugador[1] +=1
+			tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+			}
+		}
+		else if (movimentFixe == 1){ //esquerra
+			if (tauler[posicioJugador[0]][ posicioJugador[1] - 1] == 0){ 
+			}
+			else{
+			tauler[posicioJugador[0]][posicioJugador[1]] = 1
+			posicioJugador[1] -=1
+			tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+			}
+		}
+		else if (movimentFixe == 2){ //amunt
+			if (tauler[posicioJugador[0] - 1][ posicioJugador[1]] == 0){  
+			}
+			else{
+			tauler[posicioJugador[0]][posicioJugador[1]] = 1
+			posicioJugador[0] -=1
+			tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+			}
+		}
+		else if (movimentFixe == 3){ //abaix
+			if (tauler[posicioJugador[0] + 1][ posicioJugador[1]] == 0){ 
+			}
+			else{
+			tauler[posicioJugador[0]][posicioJugador[1]] = 1
+			posicioJugador[0] +=1
+			tauler[posicioJugador[0]][posicioJugador[1]] = jugador
+			}
+		}
+		else
+		{
+			if ( event.code =="ArrowRight"){
+				var movimentFixe = 0
+			}
+			else if (event.code =="ArrowLeft"){
+				var movimentFixe = 1
+			}
+			else if (event.code =="ArrowUp"){
+				var movimentFixe = 2
+			}	
+			else if (event.code =="ArrowDown"){
+				var movimentFixe = 3
+			}
+			
+		}
 
-var posicionsFantasmes = posicioInicialFantasmes(Fantasma1, Fantasma2, Fantasma3)
-var posicioInicial=posicioInicialJugador(Jugador)                                           
+}
+
+function Joc(){ //funcio que anira dins de l'interval
+	moureFantasma()
+	movimentInicial()
+	//movimentJugador(event) //Funció per a la següent entrega
+	//document.onkeyup = movimentJugador(event) //Funció per a la següent entrega
+	document.body.innerHTML = "" 
+	mostrarTaulell()
+	
+}
+
+var inici=true //variable per l'inici del jugador
+var movimentFixe = null //variable per el moviment del jugador
+posicioInicialFantasmes(Fantasma1, Fantasma2, Fantasma3)
+posicioInicialJugador(jugador)                                         
 mostrarTaulell();
-setInterval(moureFantasmes, 1000)
+setInterval(Joc, 1000)
 
 
 
