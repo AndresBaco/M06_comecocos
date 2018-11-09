@@ -1,0 +1,39 @@
+#timer{
+	font-size: 40px;
+	position:absolute;
+	text-align: right;
+	font-family: 'Poppins', sans-serif;
+	color:white;
+	left: 38%;
+	top:12%;
+	margin-left: 4em;
+	margin-right: 4em;
+}
+#puntuacio{
+	font-size: 40px;
+	position:absolute;
+	text-align: right;
+	font-family: 'Poppins', sans-serif;
+	color:white;
+	left: 38%;
+	top:20%;
+	margin-left: 4em;
+	margin-right: 4em;
+}
+
+#marcador {
+     width: 350px; 
+     height: 150px; 
+     background-color: blue;
+	 position:absolute;
+	 left:46%;
+	 top:10%;
+}
+#marcador2 {
+     width: 330px; 
+     height: 130px; 
+     background-color: #000e6b;
+	 position:absolute;
+	 left:46.7%;
+	 top:11.3%;
+}

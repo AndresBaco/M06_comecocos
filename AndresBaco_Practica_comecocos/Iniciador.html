@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"> <!-- importem un estil de lletra -->
+	<link rel="stylesheet" type="text/css" href="style.css"><!-- CSS utilitzat-->
 	<meta charset="utf-8">
 	<title> Pacman </title>
 
 </head>
 <body id="all">
+	<!-- imatges -->
+    <img src="cami.jpg" id="cami" style="display: none;"> 
+	<img src="paret.jpg" id="paret" style="display: none;">
+	<img src="fantasma.jpg" id="fantasma" style="display: none;">
+    <img src="pacmanDreta.jpg" id="pacmanDreta" style="display: none;">
+	<img src="pacman2Dreta.jpg" id="pacman2Dreta" style="display: none;">
+	<img src="pacmanEsquerra.jpg" id="pacmanEsquerra" style="display: none;">
+	<img src="pacman2Esquerra.jpg" id="pacman2Esquerra" style="display: none;">
+	<img src="pacmanAmunt.jpg" id="pacmanAmunt" style="display: none;">
+	<img src="pacman2Amunt.jpg" id="pacman2Amunt" style="display: none;">
+	<img src="pacmanAbaix.jpg" id="pacmanAbaix" style="display: none;">
+	<img src="pacman2Abaix.jpg" id="pacman2Abaix" style="display: none;">
+	<!-- espai de joc-->
+    <canvas id="tauler" width="600" height="600"> </canvas>
+	<!-- script -->
+	<div id="marcador"> </div>
+	<div id="marcador2"></div>
+	<div id="timer"> </div>
+	<div id="puntuacio"> </div>
 	<script type="text/javascript" src="pacman.js"> </script>
 </body>
 </html>
