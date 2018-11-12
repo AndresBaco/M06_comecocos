@@ -181,14 +181,12 @@ function redireccio(i){ //funció que s'utilitza quan un fantasma detecta colisi
 function moureFantasma(){ //funcio per moure els fantasmes
 	for (i=0;i<3;i++){
 		if (movimentFantasmes[i] == 0){ //dreta
-			if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] + 1] == "Q"){ //Si a la següent posició troba a Pacman, s'acaba el joc
-				fiDelJoc()
-			}
-			else if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] + 1] == 0){ 
+			colisio()//comprovem les colisions amb pacman
+			if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] + 1] == 0){ 
 			//Si es vol moure cap a la dreta, pero hi ha una paret, buscarà una altra direcció
-				redireccio(i); //
+				redireccio(i) //
 				while(movimentFantasmes[i] == 1){ //amb aquest while fem que el fantasma no vagi en direcció contrària
-					redireccio(i);
+					redireccio(i)
 				}
 			}
 			else{
@@ -199,13 +197,11 @@ function moureFantasma(){ //funcio per moure els fantasmes
 			}
 		}	
 		else if (movimentFantasmes[i] == 1){ //esquerra
-			if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] - 1] == "Q"){ //Si a la següent posició troba a Pacman, s'acaba el joc
-				fiDelJoc()
-			}
-			else if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] - 1] == 0){
-				redireccio(i);
+			colisio()
+			if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] - 1] == 0){
+				redireccio(i)
 				while(movimentFantasmes[i] == 0){
-					redireccio(i);
+					redireccio(i)
 				}
 			}
 			else {
@@ -215,13 +211,11 @@ function moureFantasma(){ //funcio per moure els fantasmes
 			}
 		}
 		else if (movimentFantasmes[i] == 2){ //amunt
-			if (tauler[ posicionsFantasmes[i][0] - 1][ posicionsFantasmes[i][1]] == "Q"){ //Si a la següent posició troba a Pacman, s'acaba el joc
-				fiDelJoc()
-			}
-			else if (tauler[ posicionsFantasmes[i][0] - 1][( posicionsFantasmes[i][1])] == 0 && movimentFantasmes[i] == 2){
-				redireccio(i);
+			colisio()
+			if (tauler[ posicionsFantasmes[i][0] - 1][( posicionsFantasmes[i][1])] == 0 && movimentFantasmes[i] == 2){
+				redireccio(i)
 				while(movimentFantasmes[i] == 3){
-					redireccio(i);
+					redireccio(i)
 				}
 			}
 			else {
@@ -231,10 +225,8 @@ function moureFantasma(){ //funcio per moure els fantasmes
 			}
 		}
 		else{ //abaix
-			if (tauler[ posicionsFantasmes[i][0] + 1][ posicionsFantasmes[i][1]] == "Q"){ //Si a la següent posició troba a Pacman, s'acaba el joc
-				fiDelJoc()
-			}
-			else if (tauler[ posicionsFantasmes[i][0] + 1][( posicionsFantasmes[i][1])] == 0){
+			colisio()
+			if (tauler[ posicionsFantasmes[i][0] + 1][( posicionsFantasmes[i][1])] == 0){
 				redireccio(i);
 				while(movimentFantasmes[i] == 2){
 					redireccio(i);
@@ -347,9 +339,15 @@ function movimentJugador(){ //Funció per moure a Pacman
 		}
 	}
 }
-function fiDelJoc(){ //Funció que finalitza el joc
-	document.getElementById("victoria").innerHTML = "HAS PERDUT!";
-	clearInterval(a);
+function colisio(){//Funció que finalitza el joc
+	if (tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] + 1] == "Q" ||  //si en qualsevol direcció està pacman, finalitza el joc
+		tauler[ posicionsFantasmes[i][0]][ posicionsFantasmes[i][1] - 1] == "Q" || 
+		tauler[ posicionsFantasmes[i][0] - 1][ posicionsFantasmes[i][1]] == "Q" || 
+		tauler[ posicionsFantasmes[i][0] + 1][ posicionsFantasmes[i][1]] == "Q"){
+				document.getElementById("victoria").innerHTML = "HAS PERDUT!";
+				clearInterval(a);
+		}
+
 }
 function teclat(e){ //funció que interpreta el teclat del jugador
 	var key = document.all ? e.which : e.key;
